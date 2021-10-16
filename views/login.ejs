@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bigstack || login</title>
+</head>
+<body>
+    <a href="../../">home page</a>
+    <h1>This is Login Page</h1>
+    <h2>Login</h2>
+
+    <form id="login">
+        <div class="container">
+          <label><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" id="email" name="email" required>
+      
+          <label><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" id="password" name="password" required>
+      
+          <button type="submit">Login</button>
+        </div>
+    </form>
+    <hr>
+    <a href="/api/auth/signup">Sign Up/Register</a>
+
+
+
+    <script>
+        const form = document.getElementById('login')
+        form.addEventListener('submit', login)
+
+        async function login(event) {
+            event.preventDefault()
+            const email = document.getElementById('email').value
+            const password = document.getElementById('password').value
+
+            const result = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            }).then((res) => res.json())
+
+            if (result.status === 'ok') {
+                // everythign went fine
+                console.log('Got the token: ', result.data)
+                localStorage.setItem('token', result.data)
+                alert('Success')
+            } else {
+                alert(result.error)
+            }
+        }
+    </script>
+</body>
+</html>
