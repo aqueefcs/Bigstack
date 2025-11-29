@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+lambda/node_modules/
+
+# Terraform files
+infrastructure/terraform/.terraform/
+infrastructure/terraform/.terraform.lock.hcl
+infrastructure/terraform/terraform.tfstate
+infrastructure/terraform/terraform.tfstate.*
+*.tfstate
+*.tfstate.*
+
+# Local env/config files
+.env
+.env.*
+!.env.example
+
+# Deployment artifacts
+lambda-deployment.zip
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+    

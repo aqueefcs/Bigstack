@@ -1,0 +1,58 @@
+{
+  "name": "codebase-ai-agent",
+  "version": "1.0.0",
+  "description": "AI agent for developer onboarding and codebase understanding",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "deploy": "npm run build && npm run deploy:lambda && npm run deploy:frontend",
+    "deploy:lambda": "cd lambda && zip -r ../lambda-deployment.zip . && aws lambda update-function-code --function-name codebase-ai-agent --zip-file fileb://lambda-deployment.zip",
+    "deploy:frontend": "cd frontend && npm run build && aws s3 sync build/ s3://codebase-ai-frontend --delete",
+    "build": "npm run build:lambda && npm run build:frontend",
+    "build:lambda": "cd lambda && npm install --production",
+    "build:frontend": "cd frontend && npm run build",
+    "setup:aws": "node scripts/setup-aws-resources.js",
+    "ingest:repo": "node scripts/ingest-repository.js"
+  },
+  "keywords": [
+    "ai",
+    "codebase",
+    "onboarding",
+    "aws",
+    "bedrock",
+    "opensearch",
+    "developer-tools"
+  ],
+  "author": "AI Agent Developer",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-bedrock": "^3.450.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.450.0",
+    "@aws-sdk/client-opensearch": "^3.450.0",
+    "@aws-sdk/client-s3": "^3.450.0",
+    "@aws-sdk/client-dynamodb": "^3.450.0",
+    "@aws-sdk/client-lambda": "^3.450.0",
+    "@aws-sdk/lib-dynamodb": "^3.450.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "markdown-it": "^13.0.2",
+    "simple-git": "^3.20.0",
+    "ignore": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "@types/node": "^20.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
